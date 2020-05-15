@@ -27,7 +27,8 @@ let gulp = require('gulp'),
     autoprefixer = require('gulp-autoprefixer'),
     postcss = require('gulp-postcss'),
     uncss = require('postcss-uncss'),
-    doiuse = require('doiuse');
+    doiuse = require('doiuse'),
+    flexbugs = require('postcss-flexbugs-fixes');
 
 gulp.task('clean', async function(){
   del.sync('dist')
@@ -41,6 +42,7 @@ gulp.task('css', async function(){
     .pipe(gulp.dest('app/scss'))
     .pipe(browserSync.reload({stream: true}))
 });
+
 gulp.task('doiuse', function(){
   return gulp.src('app/scss/style.scss')
   .pipe(postcss([doiuse({browsers: ["> 0.3%", "last 2 versions", "Firefox ESR", "not ie 6-8"], ignore: ['rem'], ignoreFiles: ['**/grid.css'], onFeatureUsage(info) {
@@ -61,14 +63,13 @@ gulp.task('doiuse', function(){
 
 gulp.task('scss', function(){
   return gulp.src('app/scss/**/*.scss')
-    .pipe(sass({outputStyle: "compressed"}))
+    .pipe(sass({outputStyle: "expanded"}))
+    .pipe(postcss([flexbugs({ bug6: false })]))
     .pipe(autoprefixer())
     .pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest('app/css'))
     .pipe(browserSync.reload({stream: true}))
 });
-
-
 
 gulp.task('html', function(){
   return gulp.src('app/*.html')
@@ -96,7 +97,6 @@ gulp.task('browser-sync', function() {
       notify: false,
   });
 });
-
 
 gulp.task('export', function(){
   let buildHtml = gulp.src('app/**/*.html')
