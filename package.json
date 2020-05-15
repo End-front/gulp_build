@@ -20,6 +20,7 @@
     "gulp-sass": "^4.1.0",
     "gulp-uglify": "^3.0.2",
     "normalize.css": "^8.0.1",
+    "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-uncss": "^0.17.0",
     "uncss": "^0.17.3"
   },
