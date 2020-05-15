@@ -26,7 +26,8 @@ let gulp = require('gulp'),
     del = require('del'),
     autoprefixer = require('gulp-autoprefixer'),
     postcss = require('gulp-postcss'),
-    uncss = require('postcss-uncss');
+    uncss = require('postcss-uncss'),
+    doiuse = require('doiuse');
 
 gulp.task('clean', async function(){
   del.sync('dist')
@@ -40,6 +41,23 @@ gulp.task('css', async function(){
     .pipe(gulp.dest('app/scss'))
     .pipe(browserSync.reload({stream: true}))
 });
+gulp.task('doiuse', function(){
+  return gulp.src('app/scss/style.scss')
+  .pipe(postcss([doiuse({browsers: ["> 0.3%", "last 2 versions", "Firefox ESR", "not ie 6-8"], ignore: ['rem'], ignoreFiles: ['**/grid.css'], onFeatureUsage(info) {
+    const selector = info.usage.parent.selector;
+    const property = `${info.usage.prop}: ${info.usage.value}`;
+
+    let status = info.featureData.caniuseData.status.toUpperCase();
+
+    if (info.featureData.missing) {
+        status = 'NOT SUPPORTED'.red;
+    } else if (info.featureData.partial) {
+        status = 'PARTIAL SUPPORT'.yellow;
+    }
+
+    console.log(`\n${status}:\n\n    ${selector} {\n        ${property};\n    }\n`);
+  }})]))
+});
 
 gulp.task('scss', function(){
   return gulp.src('app/scss/**/*.scss')
@@ -49,6 +67,8 @@ gulp.task('scss', function(){
     .pipe(gulp.dest('app/css'))
     .pipe(browserSync.reload({stream: true}))
 });
+
+
 
 gulp.task('html', function(){
   return gulp.src('app/*.html')
@@ -102,6 +122,7 @@ gulp.task('export', function(){
 });
 
 gulp.task('watch', function(){
+  gulp.watch('app/scss/style.scss', gulp.parallel('doiuse'));
   gulp.watch('app/scss/**/*.scss', gulp.parallel('scss'));
   gulp.watch('app/*.html', gulp.parallel('html'))
   gulp.watch('app/js/*.js', gulp.parallel('script'))
@@ -109,4 +130,4 @@ gulp.task('watch', function(){
 
 gulp.task('build', gulp.series('clean', 'export'));
 
-gulp.task('default', gulp.parallel('css' ,'scss', 'browser-sync', 'watch'));
+gulp.task('default', gulp.parallel('css' , 'doiuse', 'scss', 'browser-sync', 'watch'));
