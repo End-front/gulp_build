@@ -28,7 +28,8 @@ let gulp = require('gulp'),
     postcss = require('gulp-postcss'),
     uncss = require('postcss-uncss'),
     doiuse = require('doiuse'),
-    flexbugs = require('postcss-flexbugs-fixes');
+    flexbugs = require('postcss-flexbugs-fixes'),
+    image = require('gulp-image');
 
 gulp.task('clean', async function(){
   del.sync('dist')
@@ -118,7 +119,8 @@ gulp.task('export', function(){
     .pipe(gulp.dest('dist/fonts'));
 
   let BuildImg = gulp.src('app/img/**/*.*')
-    .pipe(gulp.dest('dist/img'));   
+   .pipe(image()) 
+   .pipe(gulp.dest('dist/img'));   
 });
 
 gulp.task('watch', function(){
