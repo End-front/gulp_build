@@ -28,7 +28,8 @@ let gulp = require('gulp'),
     postcss = require('gulp-postcss'),
     uncss = require('postcss-uncss'),
     doiuse = require('doiuse'),
-    flexbugs = require('postcss-flexbugs-fixes');
+    flexbugs = require('postcss-flexbugs-fixes'),
+    image = require('gulp-image');
 
 gulp.task('clean', async function(){
   del.sync('dist')
@@ -45,7 +46,7 @@ gulp.task('css', async function(){
 
 gulp.task('doiuse', function(){
   return gulp.src('app/scss/style.scss')
-  .pipe(postcss([doiuse({browsers: ["> 0.3%", "last 2 versions", "Firefox ESR", "not ie 6-8"], ignore: ['rem'], ignoreFiles: ['**/grid.css'], onFeatureUsage(info) {
+  .pipe(postcss([doiuse({browsers: ["> 0.3%", "last 12 versions", "Firefox ESR", "not ie 6-8"], ignore: ['rem'], ignoreFiles: ['**/grid.css'], onFeatureUsage(info) {
     const selector = info.usage.parent.selector;
     const property = `${info.usage.prop}: ${info.usage.value}`;
 
@@ -118,7 +119,8 @@ gulp.task('export', function(){
     .pipe(gulp.dest('dist/fonts'));
 
   let BuildImg = gulp.src('app/img/**/*.*')
-    .pipe(gulp.dest('dist/img'));   
+   .pipe(image()) 
+   .pipe(gulp.dest('dist/img'));   
 });
 
 gulp.task('watch', function(){
