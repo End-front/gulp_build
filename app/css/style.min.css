@@ -345,6 +345,18 @@ body {
   background: #123;
 }
 
+.tringle:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 120px solid transparent;
+  border-right: 120px solid transparent;
+  border-top: 120px solid #000;
+  margin-top: -48px;
+}
+
 h1 {
   color: #fff;
   font-weight: 200;
@@ -356,18 +368,17 @@ h1 {
       flex-shrink: 1;
   -ms-flex-preferred-size: calc(20px - 0%);
       flex-basis: calc(20px - 0%);
+  font-size: 1.25rem;
 }
 
-.css {
-  font-size: 13px;
+@media (min-width: 600px) {
+  h1 {
+    font-size: calc( 1.25rem + 6.66667vw - 40px);
+  }
 }
 
-.vox {
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.img {
-  -o-object-fit: contain;
-     object-fit: contain;
+@media (min-width: 1500px) {
+  h1 {
+    font-size: calc(1.25rem + 60px);
+  }
 }
