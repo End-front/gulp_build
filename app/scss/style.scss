@@ -1,19 +1,72 @@
 @import 'libs';
+@mixin responsiveSize($max-window, $min-window, $max-font, $min-font) {
+  $m: ($max-font - $min-font)/($max-window -  $min-window);
+  $b: ($max-font - ($m * $max-window));
+  font-size: ($min-font/16 + rem);
+  @media (min-width: ($min-window * 1px)) {
+    font-size: calc( #{$min-font/16 + 'rem'} + #{$m * 100vw} - #{ - ($b - $min-font) + 'px'});
+  }
+  @media (min-width: ($max-window * 1px)) {
+    font-size: calc(#{($min-font/16 + 'rem')} + #{($max-font - $min-font + 'px')});
+  }
+}
+@mixin input-placeholder {
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+@mixin hardware($backface: true, $perspective: 1000) {
+  @if $backface {
+   backface-visibility: hidden;
+  }
+  perspective: $perspective;
+}
+@mixin pseudo($display: block, $pos: absolute, $content: ''){
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+@mixin css-triangle($color, $direction, $size: 6px, $position: absolute, $round: false){
+  @include pseudo($pos: $position);
+  width: 0;
+  height: 0;
+  @if $round {
+    border-radius: $round;
+  }
+  @if $direction == down {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-top: $size solid $color;
+    margin-top: 0 - round( $size / 2.5 );
+  } @else if $direction == up {
+    border-left: $size solid transparent;
+    border-right: $size solid transparent;
+    border-bottom: $size solid $color;
+    margin-bottom: 0 - round( $size / 2.5 );
+  } @else if $direction == right {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-left: $size solid $color;
+    margin-right: -$size;
+  } @else if  $direction == left {
+    border-top: $size solid transparent;
+    border-bottom: $size solid transparent;
+    border-right: $size solid $color;
+    margin-left: -$size;
+  }
+}
 body{
   background: #123;
+}
+.tringle:before{
+  @include css-triangle(#000, down, 120px)
 }
 h1{
  color: #fff;
  font-weight: 200;
  font-family: Arial, Helvetica, sans-serif;
  flex: 1 1 calc(20px - 0%);
-}
-.css{
-  font-size: 13px;
-}
-.vox{
-  box-sizing: border-box;
-}
-.img{
-  object-fit: contain;
+ @include responsiveSize(1500, 600, 80, 20);
 }
