@@ -9,27 +9,39 @@
   "author": "Vadim Prokopchuk",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
     "browser-sync": "^2.26.5",
     "del": "^5.0.0",
     "doiuse": "^4.2.0",
     "gulp": "^4.0.2",
+    "gulp-autopolyfiller": "^1.2.1",
     "gulp-autoprefixer": "^7.0.1",
+    "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-image": "^6.1.0",
+    "gulp-jscpd": "0.0.8",
+    "gulp-jscs": "^4.1.0",
+    "gulp-pagebuilder": "^0.1.4",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
     "gulp-sass": "^4.1.0",
+    "gulp-sequence": "^1.0.0",
     "gulp-uglify": "^3.0.2",
+    "gulp-w3c-html-validator": "^2.0.1",
+    "merge-stream": "^2.0.0",
     "normalize.css": "^8.0.1",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-uncss": "^0.17.0",
     "uncss": "^0.17.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gulp-order": "^1.2.0"
+  },
   "browserslist": [
-    "> 0.3%",
-    "last 2 versions",
-    "Firefox ESR",
-    "not ie 6-8"
+    "> 0.1%",
+    "last 10 versions",
+    "not ie 5.5-10",
+    "not dead"
   ]
 }

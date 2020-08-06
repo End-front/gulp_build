@@ -1,4 +1,10 @@
-@import 'libs';
+/* doiuse-disable */
+/* uncss:ignore start */
+
+/* uncss:ignore end */
+
+// @import 'grid/grid';
+/* doiuse-enable */
 @mixin responsiveSize($max-window, $min-window, $max-font, $min-font) {
   $m: ($max-font - $min-font)/($max-window -  $min-window);
   $b: ($max-font - ($m * $max-window));
@@ -61,12 +67,35 @@ body{
   background: #123;
 }
 .tringle:before{
-  @include css-triangle(#000, down, 120px)
+  @include css-triangle(#fff, down, 120px)
 }
 h1{
- color: #fff;
+ color: #222222;
  font-weight: 200;
  font-family: Arial, Helvetica, sans-serif;
  flex: 1 1 calc(20px - 0%);
- @include responsiveSize(1500, 600, 80, 20);
+
+}
+
+.syka {
+  background: #000;
+} 
+.js-active {
+  font-weight: 500;
+}
+.active {
+  font-size: 15px;
+}
+.image {
+  @media (min-width: 1000px) {
+    display: none;
+  }
+}
+@media (max-width: 999px) {
+  .lt-block-wrapper {
+    background: #ffffff !important;
+  }
+  .part-image {
+    margin: 0 -15px;
+  }
 }
